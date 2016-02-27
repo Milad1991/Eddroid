@@ -3,18 +3,24 @@ Eddroid.Menu = function(game) {
   this.startPrompt;
   this.Eddroidlogo;
   this.backgroundPic;
+  this.spaceKey;
+
 };
 
 Eddroid.Menu.prototype = {
 
   create: function() {
-    backgroundPic = this.add.image(0, 0, 'premap')
+    backgroundPic = this.add.image(0, 0, 'premap');
     Eddroidlogo = this.add.image(90, 40, 'logo');
-    startPrompt = this.add.text(150, 450, "Click To Begin Your Experience", { font: "35px Arial", fill: "#fff", align: "center" });
-    startPrompt.inputEnabled = true;
+    startPrompt = this.add.text(120, 400, "Space Bar To Begin The Experience", { font: "35px Arial", fill: "#fff", align: "center" });
+    this.enabled = true;
+    spaceKey = this.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
+
+    spaceKey.onDown.add(this.start, this);
+    console.log('Daaaammmmnnnnn, Daniel');
 
   },
-  update: function() {
-      this.state.start('Eddroid');
+  start: function() {
+      this.state.start('Main');
   }
 };

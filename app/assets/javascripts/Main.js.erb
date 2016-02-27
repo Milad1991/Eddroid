@@ -1,0 +1,14 @@
+Eddroid.Main = function(game){
+this.ed;
+};
+ Eddroid.Main.prototype = {
+
+   preload: function(ed) {
+     
+   },
+
+   create: function(){
+     this.physics.startSystem(Phaser.Physics.ARCADE);
+     ed = this.add.sprite()
+   },
+ };
