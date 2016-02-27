@@ -9,7 +9,7 @@ Eddroid.Preload.prototype = {
   preload: function() {
     this.load.image('premap', '<%= asset_path('premap.png') %>');
     this.load.image('logo', '<%= asset_path('logo.png') %>');
-    this.load.tilemap('city', '<%= asset_path('city.json') %>', null, Phaser.Tilemap.TILED_JSON);
+    this.load.tilemap('block', '<%= asset_path('collision.json') %>', null, Phaser.Tilemap.TILED_JSON);
     this.load.image('thecity', '<%= asset_path('thecity.png') %>');
   },
 

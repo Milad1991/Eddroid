@@ -1,14 +1,20 @@
 Eddroid.Main = function(game){
-this.ed;
+    this.gamemap;
+    this.gametile;
+
 };
  Eddroid.Main.prototype = {
 
-   preload: function(ed) {
-     
+   preload: function() {
    },
 
    create: function(){
+     this.world.setBounds(0, 0, 800, 600);
      this.physics.startSystem(Phaser.Physics.ARCADE);
-     ed = this.add.sprite()
+     gamemap = this.add.sprite(0, 0, 'thecity');
+     gametile = this.add.tilemap('block');
+
+
+
    },
  };
