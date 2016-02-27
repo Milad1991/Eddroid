@@ -1,0 +1,21 @@
+Eddroid.Preload = function(game) {
+  this.ready = false;
+
+};
+
+
+Eddroid.Preload.prototype = {
+
+  preload: function() {
+    this.load.image('premap', '<%= asset_path('premap.png') %>');
+    this.load.image('logo', '<%= asset_path('logo.png') %>')
+  },
+
+  create: function() {
+  },
+
+  update: function() {
+    this.ready = true;
+    this.state.start('Menu');
+  }
+};

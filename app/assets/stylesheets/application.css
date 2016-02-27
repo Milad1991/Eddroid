@@ -13,3 +13,6 @@
  *= require_tree .
  *= require_self
  */
+canvas {   display : block;   margin : auto;}
+body { background-color: #258385;}
+@import   url('https://fonts.googleapis.com/css?family=Bangers|Permanent+Marker|Limelight' rel='stylesheet' type='text/css')

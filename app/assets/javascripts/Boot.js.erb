@@ -1,0 +1,20 @@
+var Eddroid = {};
+
+Eddroid.Boot = function(game){
+
+};
+
+Eddroid.Boot.prototype = {
+
+  preload: function() {
+    this.load.image('logo', '<%= asset_path('logo.png') %>');
+  },
+
+  create: function() {
+    this.input.maxPointers = 1;
+    this.input.addPointer();
+    this.game.stage.backgroundColor = "#000";
+
+    this.state.start('Preload');
+  }
+};
