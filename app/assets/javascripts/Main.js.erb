@@ -1,6 +1,7 @@
 Eddroid.Main = function(game){
-    this.gamemap;
-    this.gametile;
+    this.map;
+    this.mapj;
+    this.blockedLayer;
 
 };
  Eddroid.Main.prototype = {
@@ -11,8 +12,8 @@ Eddroid.Main = function(game){
    create: function(){
      this.world.setBounds(0, 0, 800, 600);
      this.physics.startSystem(Phaser.Physics.ARCADE);
-     gamemap = this.add.sprite(0, 0, 'thecity');
-     gametile = this.add.tilemap('block');
+     map = this.add.sprite(0, 0, 'map');
+     mapj = this.add.tilemap('mapj');
 
 
 

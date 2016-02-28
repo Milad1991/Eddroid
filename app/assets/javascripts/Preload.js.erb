@@ -9,8 +9,10 @@ Eddroid.Preload.prototype = {
   preload: function() {
     this.load.image('premap', '<%= asset_path('premap.png') %>');
     this.load.image('logo', '<%= asset_path('logo.png') %>');
-    this.load.tilemap('block', '<%= asset_path('collision.json') %>', null, Phaser.Tilemap.TILED_JSON);
-    this.load.image('thecity', '<%= asset_path('thecity.png') %>');
+    this.load.tilemap('mapj', '<%= asset_path('mapj.json') %>', null, Phaser.Tilemap.TILED_JSON);
+    this.load.image('map', '<%= asset_path('map.png') %>');
+    this.load.spritesheet('droid', '<%= asset_path('ed.png') %>', 32, 32);
+
   },
 
   create: function() {
