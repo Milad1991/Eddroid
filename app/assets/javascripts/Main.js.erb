@@ -1,21 +1,72 @@
 Eddroid.Main = function(game){
-    this.map;
-    this.mapj;
-    this.blockedLayer;
+  this.map;
+  this.mapjson;
+  this.player;
+  this.cursors;
 
 };
- Eddroid.Main.prototype = {
+Eddroid.Main.prototype = {
 
-   preload: function() {
-   },
-
-   create: function(){
-     this.world.setBounds(0, 0, 800, 600);
-     this.physics.startSystem(Phaser.Physics.ARCADE);
-     map = this.add.sprite(0, 0, 'map');
-     mapj = this.add.tilemap('mapj');
+  preload: function() {
+  },
 
 
+  create: function(){
+    map = this.add.sprite(0, 0, 'map');
+    // map = this.add.tilemap('map');
+    //
+    // map.addTilesetImage('SuperMarioBros-World1-1', 'tiles');
+    //
+    // layer = map.createLayer('World1');
+    //
+    // layer.resizeWorld();
 
-   },
- };
+    this.world.setBounds(0, 0, 800, 600);
+    this.physics.startSystem(Phaser.Physics.ARCADE);
+    mapjson = this.add.tilemap('mapjson');
+    player = this.add.sprite(0, 0, 'EDDROIDfront');
+
+    player.animations.add('walk');
+
+    player.animations.play('walk', 20, true);
+
+    //  game.add.tween(player).to({ x: game.width }, 10000, Phaser.Easing.Linear.None, true);
+
+    player.frame = 0;
+
+    cursors = this.input.keyboard.createCursorKeys();
+
+    this.physics.enable(player, Phaser.Physics.ARCADE);
+
+    this.camera.focusOn(player);
+
+
+  },
+
+
+  update:function() {
+
+    player.body.velocity.x = 0;
+    player.body.velocity.y = 0;
+
+
+    if (cursors.left.isDown)
+    {
+      player.body.velocity.x = -200;
+    }
+    else if (cursors.right.isDown)
+    {
+      player.body.velocity.x = 200;
+    }
+
+    if (cursors.up.isDown)
+    {
+      player.body.velocity.y = -200;
+    }
+    else if (cursors.down.isDown)
+    {
+      player.body.velocity.y = 200;
+    }
+
+  }
+};
