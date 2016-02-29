@@ -3,42 +3,102 @@ Eddroid.Main = function(game){
   this.mapjson;
   this.player;
   this.cursors;
+  this.blockedLayer;
 
 };
 Eddroid.Main.prototype = {
 
   preload: function() {
+    // this.load.image('premap', '<%= asset_path('premap.png') %>');
+    // this.load.image('logo', '<%= asset_path('logo.png') %>');
+    // this.load.image('map', '<%= asset_path('STREET.png') %>');
+    // this.game.load.tilemap('mapjson', '<%= image_path('STREET.json.erb')%>', null, Phaser.Tilemap.TILED_JSON);
+    // this.game.load.tilemap('mapjson', '/images/STREET.json', null, Phaser.Tilemap.TILED_JSON);
+    // this.game.load.image('DOOR SMALL', '<%= image_path('!MDDoorsS.png')%>');
+    // this.game.load.image('Doors');
+    // this.game.load.image('Collision');
+    // this.game.load.image('Sand');
+    // this.game.load.image('Palm Trees');
+    // this.game.load.image('pkehouse');
+    // this.game.load.image('pokeships');
+    // this.game.load.image('Sidewalk');
+    // this.game.load.image('Buildings', 'images/TileA3.png');
+    // this.game.load.image('Walls');
+    // this.game.load.image('Street');
+    // this.game.load.image('Windows');
+    // this.game.load.image('TileC');
+    // this.game.load.image('Cars');
+    // this.game.load.image('warehouses');
+    // this.game.load.image('Water');
+    // this.game.load.image('Alvaro');
+    this.load.spritesheet('EDDROIDfront', '<%= asset_path('EDDROIDfront.png')%>', 32, 32, 7);
   },
 
 
+
   create: function(){
+
+    this.world.setBounds(0,0,4800,4800);
+    this.physics.startSystem(Phaser.Physics.ARCADE);
     map = this.add.sprite(0, 0, 'map');
-    // map = this.add.tilemap('map');
+    // mapjson = this.add.tilemap('collisionlayer');
+    // mapjson.addTilesetImage('collision.png', 'Collision');
+    // blockedLayer = mapjson.createLayer('blocking');
+    // mapjson.setCollisionByExclusion([0], true, 'blocking');
+    // map.addTilesetImage('DOOR SMALL');
+    // map.addTilesetImage('Doors');
+    // map.addTilesetImage('Collision');
+    // map.addTilesetImage('Sand');
+    // map.addTilesetImage('Palm Trees');
+    // map.addTilesetImage('pkehouse');
+    // map.addTilesetImage('pokeships');
+    // map.addTilesetImage('Sidewalk');
+    // map.addTilesetImage('Buildings');
+    // map.addTilesetImage('Walls');
+    // map.addTilesetImage('Street');
+    // map.addTilesetImage('Windows');
+    // map.addTilesetImage('TileC');
+    // map.addTilesetImage('Cars');
+    // map.addTilesetImage('warehouses');
+    // map.addTilesetImage('Water');
+    // map.addTilesetImage('Alvaro');
     //
-    // map.addTilesetImage('SuperMarioBros-World1-1', 'tiles');
-    //
-    // layer = map.createLayer('World1');
+    // layer = map.createLayer('Park Benches');
+    // Boats = map.createLayer('Boats');
+    // Collision = map.createLayer('Collision');
+    // PalmTrees = map.createLayer('Palm Trees');
+    // StreetLights = map.createLayer('Street Lights');
+    // Trees = map.createLayer('Trees');
+    // Awnings = map.createLayer('Awnings');
+    // Windows = map.createLayer('Windows');
+    // Doors = map.createLayer('Doors');
+    // Car2 = map.createLayer('Car2');
+    // Cars = map.createLayer('Cars');
+    // SidewalkObjects = map.createLayer('Sidewalk Objects');
+    // Posters = map.createLayer('Posters etc.');
+    // Buildings = map.createLayer('Buildings');
+    // Streetlights2 = map.createLayer('Streetlights2');
+    // Road = map.createLayer('Road');
+    // Sidewalk = map.createLayer('Sidewalk');
     //
     // layer.resizeWorld();
+    // layer.wrap = true
 
-    this.world.setBounds(0, 0, 800, 600);
-    this.physics.startSystem(Phaser.Physics.ARCADE);
-    mapjson = this.add.tilemap('mapjson');
+    // this.world.setBounds(0, 0, 800, 600);
+
     player = this.add.sprite(0, 0, 'EDDROIDfront');
-
     player.animations.add('walk');
-
     player.animations.play('walk', 20, true);
 
     //  game.add.tween(player).to({ x: game.width }, 10000, Phaser.Easing.Linear.None, true);
 
-    player.frame = 0;
-
+    // player.frame = 0;
+    this.physics.enable(player, Phaser.Physics.ARCADE);
     cursors = this.input.keyboard.createCursorKeys();
 
-    this.physics.enable(player, Phaser.Physics.ARCADE);
 
-    this.camera.focusOn(player);
+    this.camera.follow(player, Phaser.Camera.FOLLOW_TOPDOWN);
+    player.body.collideWorldBounds = true;
 
 
   },
@@ -68,5 +128,16 @@ Eddroid.Main.prototype = {
       player.body.velocity.y = 200;
     }
 
+    if (cursors.left.isDown) {
+      this.game.camera.x -= 8;
+    } else if (cursors.right.isDown) {
+      this.game.camera.x += 8;
+    }
+    if (cursors.up.isDown) {
+      this.game.camera.y -= 8;
+    } else if (cursors.down.isDown) {
+      this.game.camera.y += 8;
+    }
   }
+
 };

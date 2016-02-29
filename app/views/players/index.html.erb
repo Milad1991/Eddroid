@@ -1,7 +1,7 @@
 <div id="canvas" >
 <script type="text/javascript">
 
-var game = new Phaser.Game(800, 600, Phaser.CANVAS, 'eddroid');
+var game = new Phaser.Game(800, 600, Phaser.AUTO, 'eddroid');
 game.state.add('Boot', Eddroid.Boot);
 game.state.add('Preload', Eddroid.Preload);
 game.state.add('Menu', Eddroid.Menu);

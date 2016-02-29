@@ -9,10 +9,28 @@ Eddroid.Preload.prototype = {
   preload: function() {
     this.load.image('premap', '<%= asset_path('premap.png') %>');
     this.load.image('logo', '<%= asset_path('logo.png') %>');
-    this.load.tilemap('mapjson', '<%= asset_path('STREET.json') %>', null, Phaser.Tilemap.TILED_JSON);
+    this.load.tilemap('collisionlayer', '<%= asset_path('Collision.json') %>', null, Phaser.Tilemap.TILED_JSON);
     this.load.image('map', '<%= asset_path('STREET.png') %>');
-    this.load.spritesheet('EDDROIDfront', '<%= asset_path('EDDROIDfront.png')%>', 32, 32, 7);
-
+    this.load.spritesheet('EDDROIDfront', '<%= asset_path 'EDDROIDfront.png' %>', 32, 32, 7);
+    game.load.tilemap('mapjson', '<%= image_path('STREET.json.erb')%>', null, Phaser.Tilemap.TILED_JSON);
+    this.game.load.image('DOOR SMALL', '<%= image_path "!MDDoorsS.png" %>');
+    this.game.load.image('Doors', '<%= image_path '!MDDoorsD.png'%>');
+    this.game.load.image('Collision', '<%= image_path 'collision.png' %>');
+    this.game.load.image('Sand', '<%= image_path 'ground.png' %>');
+    this.game.load.image('Palm Trees', '<%= image_path 'Palm_tree.png' %>');
+    this.game.load.image('pkehouse', '<%= image_path 'pkehouse.png' %>');
+    this.game.load.image('pokeships', '<%= image_path 'pokeships.png' %>');
+    this.game.load.image('Sidewalk', '<%= image_path 'TileA2.png' %>');
+    this.game.load.image('Buildings', '<%= image_path 'TileA3.png' %>');
+    this.game.load.image('Walls', '<%= image_path 'TileA4.png' %>');
+    this.game.load.image('Street', '<%= image_path 'TileA5.png' %>');
+    this.game.load.image('Windows', '<%= image_path 'TileB.png' %>');
+    this.game.load.image('TileC', '<%= image_path 'TileC.png' %>');
+    this.game.load.image('Cars', '<%= image_path 'TileD.png' %>');
+    this.game.load.image('warehouses', '<%= image_path 'warehouses.png' %>');
+    this.game.load.image('Water', '<%= image_path 'water.png' %>');
+    this.game.load.image('Alvaro', '<%= image_path 'collision.png' %>');
+    //
   },
 
   create: function() {
