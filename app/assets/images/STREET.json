@@ -162,7 +162,7 @@
          "name":"Collision",
          "opacity":0.709999978542328,
          "type":"tilelayer",
-         "visible":false,
+         "visible":true,
          "width":150,
          "x":0,
          "y":0
@@ -201,7 +201,7 @@
         {
          "columns":16,
          "firstgid":1,
-         "image":"..\/Downloads\/modern-day-tiles-v2\/VX\/TileD.png",
+         "image":"Eddroid\/app\/assets\/images\/TileD.png",
          "imageheight":512,
          "imagewidth":512,
          "margin":0,
@@ -218,7 +218,7 @@
         {
          "columns":8,
          "firstgid":257,
-         "image":"..\/Downloads\/modern-day-tiles-v2\/VX\/TileA5.png",
+         "image":"Eddroid\/app\/assets\/images\/TileA5.png",
          "imageheight":512,
          "imagewidth":256,
          "margin":0,
@@ -235,7 +235,7 @@
         {
          "columns":16,
          "firstgid":385,
-         "image":"..\/Downloads\/modern-day-tiles-v2\/VX\/TileA3.png",
+         "image":"Eddroid\/app\/assets\/images\/TileA3.png",
          "imageheight":256,
          "imagewidth":512,
          "margin":0,
@@ -252,7 +252,7 @@
         {
          "columns":12,
          "firstgid":513,
-         "image":"..\/Downloads\/modern-day-tiles-v2\/VX\/!MDDoorsD.png",
+         "image":"Eddroid\/app\/assets\/images\/!MDDoorsD.png",
          "imageheight":512,
          "imagewidth":768,
          "margin":0,
@@ -269,7 +269,7 @@
         {
          "columns":16,
          "firstgid":609,
-         "image":"..\/Downloads\/modern-day-tiles-v2\/VX\/TileB.png",
+         "image":"Eddroid\/app\/assets\/images\/TileB.png",
          "imageheight":512,
          "imagewidth":512,
          "margin":0,
@@ -286,7 +286,7 @@
         {
          "columns":16,
          "firstgid":865,
-         "image":"..\/Downloads\/modern-day-tiles-v2\/VX\/TileA2.png",
+         "image":"Eddroid\/app\/assets\/images\/TileA2.png",
          "imageheight":384,
          "imagewidth":512,
          "margin":0,
@@ -303,7 +303,7 @@
         {
          "columns":21,
          "firstgid":1057,
-         "image":"STREET\/modern-day-tiles-v2\/Palm_tree.png",
+         "image":"Eddroid\/app\/assets\/images\/Palm_tree.png",
          "imageheight":450,
          "imagewidth":700,
          "margin":0,
@@ -320,7 +320,7 @@
         {
          "columns":12,
          "firstgid":1351,
-         "image":"STREET\/modern-day-tiles-v2\/VX\/!MDDoorsS.png",
+         "image":"Eddroid\/app\/assets\/images\/!MDDoorsS.png",
          "imageheight":512,
          "imagewidth":384,
          "margin":0,
@@ -337,7 +337,7 @@
         {
          "columns":10,
          "firstgid":1447,
-         "image":"STREET\/water.png",
+         "image":"Eddroid\/app\/assets\/images\/water.png",
          "imageheight":240,
          "imagewidth":320,
          "margin":0,
@@ -354,7 +354,7 @@
         {
          "columns":32,
          "firstgid":1517,
-         "image":"..\/Downloads\/ground_tilesest\/ground.png",
+         "image":"Eddroid\/app\/assets\/images\/ground.png",
          "imageheight":1024,
          "imagewidth":1024,
          "margin":0,
@@ -371,7 +371,7 @@
         {
          "columns":16,
          "firstgid":2541,
-         "image":"STREET\/modern-day-tiles-v2\/VX\/TileA4.png",
+         "image":"Eddroid\/app\/assets\/images\/TileA4.png",
          "imageheight":480,
          "imagewidth":512,
          "margin":0,
@@ -388,7 +388,7 @@
         {
          "columns":16,
          "firstgid":2781,
-         "image":"..\/Downloads\/modern-day-tiles-v2\/VX\/TileC.png",
+         "image":"Eddroid\/app\/assets\/images\/TileC.png",
          "imageheight":512,
          "imagewidth":512,
          "margin":0,
@@ -405,7 +405,7 @@
         {
          "columns":25,
          "firstgid":3037,
-         "image":"collision.png",
+         "image":"Eddroid\/app\/assets\/images\/collision.png",
          "imageheight":640,
          "imagewidth":800,
          "margin":0,
@@ -439,7 +439,7 @@
         {
          "columns":79,
          "firstgid":4906,
-         "image":"pokeships.png",
+         "image":"Eddroid\/app\/assets\/images\/pokeships.png",
          "imageheight":2262,
          "imagewidth":2529,
          "margin":0,
@@ -456,7 +456,7 @@
         {
          "columns":70,
          "firstgid":10436,
-         "image":"pkehouse.png",
+         "image":"Eddroid\/app\/assets\/images\/pkehouse.png",
          "imageheight":2400,
          "imagewidth":2240,
          "margin":0,
@@ -473,7 +473,7 @@
         {
          "columns":43,
          "firstgid":15686,
-         "image":"warehouses.png",
+         "image":"Eddroid\/app\/assets\/images\/warehouses.png",
          "imageheight":1600,
          "imagewidth":1600,
          "margin":5,
