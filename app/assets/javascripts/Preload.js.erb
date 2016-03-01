@@ -11,7 +11,6 @@ Eddroid.Preload.prototype = {
     this.load.image('logo', '<%= asset_path('logo.png') %>');
     this.load.tilemap('collisionlayer', '<%= asset_path('Collision.json') %>', null, Phaser.Tilemap.TILED_JSON);
     this.load.image('map', '<%= asset_path('STREET.png') %>');
-    this.load.spritesheet('EDDROIDfront', '<%= asset_path 'EDDROIDfront.png' %>', 32, 32, 7);
     game.load.tilemap('mapjson', '<%= image_path('STREET.json.erb')%>', null, Phaser.Tilemap.TILED_JSON);
     this.game.load.image('DOOR SMALL', '<%= image_path "!MDDoorsS.png" %>');
     this.game.load.image('Doors', '<%= image_path '!MDDoorsD.png'%>');
@@ -30,7 +29,14 @@ Eddroid.Preload.prototype = {
     this.game.load.image('warehouses', '<%= image_path 'warehouses.png' %>');
     this.game.load.image('Water', '<%= image_path 'water.png' %>');
     this.game.load.image('Alvaro', '<%= image_path 'collision.png' %>');
-    //
+    // this.game.load.audio('nightcall', '<%= asset_path('Kavinsky.mp3') %>');
+    // this.load.spritesheet('EDWB', '<%= asset_path 'EDWB.png' %>', 48, 48, 7);
+    // this.load.spritesheet('EDWL', '<%= asset_path 'EDWL.png' %>', 48, 48, 5);
+    // this.load.spritesheet('EDWR', '<%= asset_path 'EDWR.png' %>', 48, 48, 5);
+    // this.load.spritesheet('EDWF', '<%= asset_path 'EDWF.png' %>', 48, 48, 8);
+    this.load.spritesheet('Eddroid', '<%= asset_path 'EDDROID.png' %>', 48, 48, 25);
+
+
   },
 
   create: function() {
