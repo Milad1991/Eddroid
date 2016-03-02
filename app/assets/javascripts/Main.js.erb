@@ -79,9 +79,6 @@ Eddroid.Main.prototype = {
    this.createEnemies();
 
 
-
-
-
   },
 
 
@@ -121,6 +118,34 @@ Eddroid.Main.prototype = {
       this.player.animations.play('walk-down');
       this.player.body.velocity.y = 200;
       this.playerDirection = 0;
+    }
+
+    if (cursors.down.isDown && cursors.right.isDown)
+    {
+      this.player.animations.play('walk-right');
+      this.player.body.velocity.x = 400;
+      this.playerDirection = 90;
+    }
+
+    if (cursors.down.isDown && cursors.left.isDown)
+    {
+      this.player.animations.play('walk-left');
+      this.player.body.velocity.x = -400;
+      this.playerDirection = 90;
+    }
+
+    if (cursors.up.isDown && cursors.right.isDown)
+    {
+      this.player.animations.play('walk-right');
+      this.player.body.velocity.x = 400;
+      this.playerDirection = 90;
+    }
+
+    if (cursors.up.isDown && cursors.left.isDown)
+    {
+      this.player.animations.play('walk-left');
+      this.player.body.velocity.x = -400;
+      this.playerDirection = 90;
     }
 
     if(this.fireButton.isDown)
@@ -182,7 +207,6 @@ Eddroid.Main.prototype = {
 
  descend: function(){
    enemies.y += 100;
-   console.log('test');
  },
 
  collisionHandler: function(ruby, enemy) {
