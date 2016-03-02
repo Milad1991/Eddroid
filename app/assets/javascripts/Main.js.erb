@@ -4,6 +4,7 @@ Eddroid.Main = function(game){
   this.player;
   this.cursors;
   this.blockedLayer;
+  playMusic = true,
   this.music;
   this.bullet;
   this.bulletTime = 0;
@@ -13,7 +14,9 @@ Eddroid.Main = function(game){
   this.addW;
   this.addD;
   this.playerDirection;
-
+  this.enemies;
+  this.rubies;
+  this.ruby;
 
 };
 Eddroid.Main.prototype = {
@@ -21,6 +24,8 @@ Eddroid.Main.prototype = {
   preload: function() {
 
   },
+
+
 
 
 
@@ -35,9 +40,14 @@ Eddroid.Main.prototype = {
     map = this.add.sprite(0, 0, 'map');
 
     this.player = this.add.sprite(point.x, point.y, 'Eddroid');
-    this.rubies = []
+
+    rubies = this.add.group();
+    rubies.enableBody = true;
+    rubies.physicsBodyType = Phaser.Physics.ARCADE;
     this.nextShotAt = 0;
     this.shotDelay = 100;
+
+    this.fire();
 
 
     //  game.add.tween(player).to({ x: game.width }, 10000, Phaser.Easing.Linear.None, true);
@@ -59,31 +69,32 @@ Eddroid.Main.prototype = {
     this.player.animations.add('walk-up',[10,11,12,13,14,15,16]);
     this.player.animations.add('walk-right',[20,21,22,23,24]);
     this.player.animations.add('walk-left',[26,27,28,29,30]);
-    // player.animations.add('walk-up',[32,33,34,35,36]); sprite.animations.add('walk-down',[16,17,18,19,20]);
-    // hero.animations.add('walkleft', [9,10,11,12,13,14,15,16,17]);
-    // player.animations.add('south.walk', [0, 1, 2, 3, 4, 5, 6, 7]);
-    // hero.animations.add('walkright', [27,28,29,30,31,32,33,34,35]);
+
+
+   enemies = this.add.group();
+   enemies.enableBody = true;
+   enemies.physicsBodyType = Phaser.Physics.ARCADE;
+
+
+   this.createEnemies();
 
 
 
-    // bullets = this.add.group();
-    // bullets.enableBody = true;
-    // bullets.physicsBodyType = Phaser.Physics.ARCADE;
-    // bullets.createMultiple(999, 'bullet')
-    // bullets.setAll('anchor.x', 0);
-    // bullets.setAll('anchor.y', 1);
-    // bullets.setAll('outofBoundsKill', true);
-    // bullets.setAll('checkWorldBounds', true);
+
 
   },
 
 
   update:function() {
 
+    this.physics.arcade.collide(rubies, enemies, this.collisionHandler, null, this);
+
     this.player.body.velocity.x = 0;
     this.player.body.velocity.y = 0;
-
-        console.log(this.player.body);
+    this.player.animations.getAnimation('walk-left').delay = 50;
+    this.player.animations.getAnimation('walk-right').delay = 50;
+    this.player.animations.getAnimation('walk-up').delay = 50;
+    this.player.animations.getAnimation('walk-down').delay = 50;
 
     if (cursors.left.isDown || addA.isDown)
     {
@@ -126,20 +137,58 @@ Eddroid.Main.prototype = {
       return;
     }
 
+
+
     this.nextShotAt = this.time.now + this.shotDelay;
 
 
-    var ruby = this.add.sprite(this.player.x, this.player.y - 20, 'ruby');
-    ruby.anchor.setTo(1, -2);
+    var ruby = rubies.create(this.player.x, this.player.y - 20, 'ruby');
     this.physics.enable(ruby, Phaser.Physics.ARCADE);
     if (this.playerDirection === 90 || this.playerDirection === 270) {
       ruby.body.velocity.x = this.playerDirection === 90 ? 500 : -500
     } else {
       ruby.body.velocity.y = this.playerDirection === 0 ? 500 : -500
     }
-    this.rubies.push(ruby);
+    if (this.playerDirection === 90) {
+      ruby.anchor.setTo(-2.62, -2.1);
+    } else if (this.playerDirection === 270) {
+      ruby.anchor.setTo(0.4 , -2.1);
+    } else if (this.playerDirection === 180) {
+      ruby.anchor.setTo(-1.8, -2);
+    } else if (this.playerDirection === 0) {
+      ruby.anchor.setTo(-0.3, -4);
+    } else {
+      ruby.anchor.setTo(0, 0);
+    }
+    // this.rubies.push(ruby);
 
 
   },
+
+  createEnemies: function(){
+   for(var y = 0; y < 4; y++){
+     for(var x = 0; x < 10; x++){
+       var enemy = enemies.create(x*48, y*50, 'enemy');
+       enemy.anchor.setTo(0.5,0.5);
+     }
+   }
+   enemies.x = 100;
+   enemies.y = 50;
+
+   var tween = this.add.tween(enemies).to({ x: 200 }, 2000, Phaser.Easing.Linear.None, true,0,1000,true);
+
+ },
+
+
+ descend: function(){
+   enemies.y += 100;
+   console.log('test');
+ },
+
+ collisionHandler: function(ruby, enemy) {
+   ruby.kill();
+   enemy.kill();
+ }
+
 
 };

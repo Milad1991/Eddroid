@@ -12,6 +12,7 @@ Eddroid.Preload.prototype = {
     this.load.tilemap('collisionlayer', '<%= asset_path('Collision.json') %>', null, Phaser.Tilemap.TILED_JSON);
     this.load.image('map', '<%= asset_path('STREET.png') %>');
     game.load.tilemap('mapjson', '<%= image_path('STREET.json.erb')%>', null, Phaser.Tilemap.TILED_JSON);
+    this.game.load.audio('nightcall', '<%= asset_path('Kavinsky.mp3') %>');
     this.game.load.image('DOOR SMALL', '<%= image_path "!MDDoorsS.png" %>');
     this.game.load.image('Doors', '<%= image_path '!MDDoorsD.png'%>');
     this.game.load.image('Collision', '<%= image_path 'collision.png' %>');
@@ -29,7 +30,6 @@ Eddroid.Preload.prototype = {
     this.game.load.image('warehouses', '<%= image_path 'warehouses.png' %>');
     this.game.load.image('Water', '<%= image_path 'water.png' %>');
     this.game.load.image('Alvaro', '<%= image_path 'collision.png' %>');
-    // this.game.load.audio('nightcall', '<%= asset_path('Kavinsky.mp3') %>');
     // game.load.audio('nightcall', '/public/Kavinsky-d48c8f210c173900aaf3e7426bee6909ca6f69059347503d7d036dd0c475726e.mp3');
     // this.load.spritesheet('EDWB', '<%= asset_path 'EDWB.png' %>', 48, 48, 7);
     // this.load.spritesheet('EDWL', '<%= asset_path 'EDWL.png' %>', 48, 48, 5);
@@ -37,6 +37,7 @@ Eddroid.Preload.prototype = {
     // this.load.spritesheet('EDWF', '<%= asset_path 'EDWF.png' %>', 48, 48, 8);
     this.load.spritesheet('Eddroid', '<%= asset_path 'EDDROID.png' %>', 48, 48, 30);
     this.load.image('ruby', '<%= image_path 'ruby.png' %>');
+    this.load.image('enemy', '<%= image_path 'html.png' %>');
 
 
   },
@@ -44,8 +45,15 @@ Eddroid.Preload.prototype = {
   create: function() {
   },
 
+  addGameMusic:function() {
+  music = game.add.audio('nightcall');
+  music.loop = true;
+  music.play();
+},
+
   update: function() {
     this.ready = true;
     this.state.start('Menu');
+    this.addGameMusic();
   }
 };
