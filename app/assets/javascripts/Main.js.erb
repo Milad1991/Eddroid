@@ -64,6 +64,7 @@ Eddroid.Main.prototype = {
     addW = this.input.keyboard.addKey(Phaser.Keyboard.W)
     addD = this.input.keyboard.addKey(Phaser.Keyboard.D)
     this.fireButton = this.game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR)
+    addP = this.input.keyboard.addKey(Phaser.Keyboard.P)
 
     flames = this.add.group();
     flames.createMultiple(100, 'destroy');
@@ -79,18 +80,22 @@ Eddroid.Main.prototype = {
     this.player.animations.add('walk-left',[26,27,28,29,30]);
 
 
-   enemies = this.add.group();
-   enemies.enableBody = true;
-   enemies.physicsBodyType = Phaser.Physics.ARCADE;
+    enemies = this.add.group();
+    enemies.enableBody = true;
+    enemies.physicsBodyType = Phaser.Physics.ARCADE;
 
 
-   this.createEnemies();
+    this.createEnemies();
+    var upKeyWasDown = false;
+    var timeOfLastShot;
 
 
   },
 
 
   update:function() {
+
+    var counter = 0
 
     this.physics.arcade.collide(rubies, enemies, this.collisionHandler, null, this);
 
@@ -156,10 +161,17 @@ Eddroid.Main.prototype = {
       this.playerDirection = 270;
     }
 
+    if (addP.isDown)
+    {
+      this.managePause();
+    }
+
+
     if(this.fireButton.isDown)
     {
       this.fire();
     }
+
 
   },
 
@@ -199,20 +211,20 @@ Eddroid.Main.prototype = {
   },
 
   createEnemies: function(){
-   for(var y = 0; y < 4; y++){
-     for(var x = 0; x < 10; x++){
-       var enemy = enemies.create(x*48, y*50, 'enemy');
-       enemy.anchor.setTo(0.5,0.5);
-     }
-   }
-   enemies.x = 100;
-   enemies.y = 50;
+    for(var y = 0; y < 4; y++){
+      for(var x = 0; x < 10; x++){
+        var enemy = enemies.create(x*48, y*50, 'enemy');
+        enemy.anchor.setTo(0.5,0.5);
+      }
+    }
+    enemies.x = 100;
+    enemies.y = 50;
 
-   var tween = this.add.tween(enemies).to({ x: 200 }, 2000, Phaser.Easing.Linear.None, true,0,1000,true);
+    var tween = this.add.tween(enemies).to({ x: 200 }, 2000, Phaser.Easing.Linear.None, true,0,1000,true);
 
- },
+  },
 
- setupEnemy: function(enemy) {
+  setupEnemy: function(enemy) {
 
     enemy.anchor.x = 0.5;
     enemy.anchor.y = 0.5;
@@ -220,18 +232,29 @@ Eddroid.Main.prototype = {
   },
 
 
- descend: function(){
-   enemies.y += 100;
- },
+  descend: function(){
+    enemies.y += 100;
+  },
 
- collisionHandler: function(ruby, enemy) {
-   ruby.kill();
-   enemy.kill();
+  collisionHandler: function(ruby, enemy) {
+    ruby.kill();
+    enemy.kill();
 
-   var gone = flames.getFirstExists(false);
+    var gone = flames.getFirstExists(false);
     gone.reset(enemy.body.x, enemy.body.y);
     gone.play('destroy', 20, false, true);
- }
+  },
+
+
+  managePause: function() {
+    this.game.paused = true;
+    var pausemenu = this.game.add.image(0,0,'pausemenu');
+    pausemenu.scale.setTo(0.2,0.2);
+    addP.onDown.add(function(){
+        pausemenu.destroy();
+        this.game.paused = false;
+    }, this);
+  }
 
 
 };
