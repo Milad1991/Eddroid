@@ -128,32 +128,32 @@ Eddroid.Main.prototype = {
       this.playerDirection = 0;
     }
 
-    if (cursors.down.isDown && cursors.right.isDown)
+    if ((cursors.down.isDown && cursors.right.isDown) || (addS.isDown && addD.isDown))
     {
       this.player.animations.play('walk-right');
       this.player.body.velocity.x = 400;
       this.playerDirection = 90;
     }
 
-    if (cursors.down.isDown && cursors.left.isDown)
+    if ((cursors.down.isDown && cursors.left.isDown) || (addS.isDown && addA.isDown))
     {
       this.player.animations.play('walk-left');
       this.player.body.velocity.x = -400;
-      this.playerDirection = 90;
+      this.playerDirection = 270;
     }
 
-    if (cursors.up.isDown && cursors.right.isDown)
+    if ((cursors.up.isDown && cursors.right.isDown) || (addW.isDown && addD.isDown))
     {
       this.player.animations.play('walk-right');
       this.player.body.velocity.x = 400;
       this.playerDirection = 90;
     }
 
-    if (cursors.up.isDown && cursors.left.isDown)
+    if ((cursors.up.isDown && cursors.left.isDown) || (addW.isDown && addA.isDown))
     {
       this.player.animations.play('walk-left');
       this.player.body.velocity.x = -400;
-      this.playerDirection = 90;
+      this.playerDirection = 270;
     }
 
     if(this.fireButton.isDown)
