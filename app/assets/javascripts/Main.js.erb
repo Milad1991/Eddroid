@@ -19,6 +19,7 @@ Eddroid.Main = function(game){
   this.ruby;
   this.destroy;
   this.flames;
+  this.playerHit;
 
 
 };
@@ -43,6 +44,7 @@ Eddroid.Main.prototype = {
     map = this.add.sprite(0, 0, 'map');
 
     this.player = this.add.sprite(point.x, point.y, 'Eddroid');
+    this.player.health = 10;
 
     rubies = this.add.group();
     rubies.enableBody = true;
@@ -79,23 +81,28 @@ Eddroid.Main.prototype = {
     this.player.animations.add('walk-right',[20,21,22,23,24]);
     this.player.animations.add('walk-left',[26,27,28,29,30]);
 
-
     enemies = this.add.group();
     enemies.enableBody = true;
     enemies.physicsBodyType = Phaser.Physics.ARCADE;
+    enemies.createMultiple(10, 'enemy');
+    enemies.setAll('anchor.x', 0.5);
+    enemies.setAll('anchor.y', 0.5);
+    enemies.setAll('outOfBoundsKill', true);
+    enemies.setAll('checkWorldBounds', true);
 
-
-    this.createEnemies();
-    var upKeyWasDown = false;
-    var timeOfLastShot;
-
+    this.nextEnemyAt = 0;
+    this.enemyDelay = 2000;
 
   },
 
 
+
+
   update:function() {
 
-    var counter = 0
+    var health = 10;
+
+    var counter = 0;
 
     this.physics.arcade.collide(rubies, enemies, this.collisionHandler, null, this);
 
@@ -105,6 +112,8 @@ Eddroid.Main.prototype = {
     this.player.animations.getAnimation('walk-right').delay = 50;
     this.player.animations.getAnimation('walk-up').delay = 50;
     this.player.animations.getAnimation('walk-down').delay = 50;
+
+
 
     if (cursors.left.isDown || addA.isDown)
     {
@@ -167,12 +176,26 @@ Eddroid.Main.prototype = {
     }
 
 
+
     if(this.fireButton.isDown)
     {
       this.fire();
     }
 
+    this.game.world.bringToTop(flames);
 
+    if (this.nextEnemyAt < this.time.now && enemies.countDead() > 0) {
+          this.nextEnemyAt = this.time.now + this.enemyDelay;
+          var enemy = enemies.getFirstExists(false);
+          // spawn at a random location top of the screen
+          enemy.reset(this.rnd.integerInRange(20, 780), 0);
+          // also randomize the speed
+          enemy.body.velocity.y = this.rnd.integerInRange(30, 60);
+        }
+
+    this.physics.arcade.collide(this.player, enemies, this.playerHit, null, this);
+
+   if (this.nextEnemyAt < this.time.now && enemies.countDead() > 0) {}
   },
 
 
@@ -205,24 +228,11 @@ Eddroid.Main.prototype = {
     } else {
       ruby.anchor.setTo(0, 0);
     }
-    // this.rubies.push(ruby);
 
 
   },
 
-  createEnemies: function(){
-    for(var y = 0; y < 4; y++){
-      for(var x = 0; x < 10; x++){
-        var enemy = enemies.create(x*48, y*50, 'enemy');
-        enemy.anchor.setTo(0.5,0.5);
-      }
-    }
-    enemies.x = 100;
-    enemies.y = 50;
 
-    var tween = this.add.tween(enemies).to({ x: 200 }, 2000, Phaser.Easing.Linear.None, true,0,1000,true);
-
-  },
 
   setupEnemy: function(enemy) {
 
@@ -254,7 +264,24 @@ Eddroid.Main.prototype = {
         pausemenu.destroy();
         this.game.paused = false;
     }, this);
-  }
+  },
+
+
+  playerHit: function (player, enemy) {
+     enemy.kill();
+
+    if (this.player.health > 1) {
+       this.player.health --;
+     } else {
+      this.player.kill();
+      this.state.start('Menu');
+     }
+
+     var gone = flames.getFirstExists(false);
+     gone.reset(this.player.body.x, this.player.body.y);
+     gone.play('destroy', 20, false, true);
+
+   },
 
 
 };
