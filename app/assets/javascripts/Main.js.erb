@@ -17,6 +17,9 @@ Eddroid.Main = function(game){
   this.enemies;
   this.rubies;
   this.ruby;
+  this.destroy;
+  this.flames;
+
 
 };
 Eddroid.Main.prototype = {
@@ -61,6 +64,11 @@ Eddroid.Main.prototype = {
     addW = this.input.keyboard.addKey(Phaser.Keyboard.W)
     addD = this.input.keyboard.addKey(Phaser.Keyboard.D)
     this.fireButton = this.game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR)
+
+    flames = this.add.group();
+    flames.createMultiple(100, 'destroy');
+    flames.forEach(this.setupEnemy, this);
+
 
 
     this.camera.follow(this.player, Phaser.Camera.FOLLOW_TOPDOWN);
@@ -204,6 +212,13 @@ Eddroid.Main.prototype = {
 
  },
 
+ setupEnemy: function(enemy) {
+
+    enemy.anchor.x = 0.5;
+    enemy.anchor.y = 0.5;
+    enemy.animations.add('destroy');
+  },
+
 
  descend: function(){
    enemies.y += 100;
@@ -212,6 +227,10 @@ Eddroid.Main.prototype = {
  collisionHandler: function(ruby, enemy) {
    ruby.kill();
    enemy.kill();
+
+   var gone = flames.getFirstExists(false);
+    gone.reset(enemy.body.x, enemy.body.y);
+    gone.play('destroy', 20, false, true);
  }
 
 
