@@ -12,7 +12,6 @@ Eddroid.Preload.prototype = {
     this.load.tilemap('collisionlayer', '<%= asset_path('Collision.json') %>', null, Phaser.Tilemap.TILED_JSON);
     this.load.image('map', '<%= asset_path('STREET.png') %>');
     game.load.tilemap('mapjson', '<%= image_path('STREET.json.erb')%>', null, Phaser.Tilemap.TILED_JSON);
-    this.game.load.audio('nightcall', '<%= asset_path('Kavinsky.mp3') %>');
     this.game.load.image('DOOR SMALL', '<%= image_path "!MDDoorsS.png" %>');
     this.game.load.image('Doors', '<%= image_path '!MDDoorsD.png'%>');
     this.game.load.image('Collision', '<%= image_path 'collision.png' %>');
@@ -35,6 +34,7 @@ Eddroid.Preload.prototype = {
     this.load.image('enemy', '<%= image_path 'html.png' %>');
     this.load.spritesheet('destroy', '<%= asset_path 'destroy.png' %>',65, 65, 30);
     this.load.image('pausemenu', '<%= asset_path('STREET1.png') %>');
+    this.load.image('rails', '<%= image_path 'railsE.png' %>');
 
 
 
@@ -43,15 +43,15 @@ Eddroid.Preload.prototype = {
   create: function() {
   },
 
-  addGameMusic:function() {
-  music = game.add.audio('nightcall');
-  music.loop = true;
-  music.play();
-},
+//   addGameMusic:function() {
+//   music = game.add.audio('');
+//   music.loop = true;
+//   music.play();
+// },
 
   update: function() {
     this.ready = true;
     this.state.start('Menu');
-    this.addGameMusic();
+    // this.addGameMusic();
   }
 };

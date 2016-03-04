@@ -20,7 +20,8 @@ Eddroid.Main = function(game){
   this.destroy;
   this.flames;
   this.playerHit;
-
+  this.rails;
+  this.playerHit1;
 
 };
 Eddroid.Main.prototype = {
@@ -28,9 +29,6 @@ Eddroid.Main.prototype = {
   preload: function() {
 
   },
-
-
-
 
 
   create: function(){
@@ -55,6 +53,7 @@ Eddroid.Main.prototype = {
     this.fire();
 
 
+
     //  game.add.tween(player).to({ x: game.width }, 10000, Phaser.Easing.Linear.None, true);
 
     this.physics.enable(this.player, Phaser.Physics.ARCADE);
@@ -71,6 +70,7 @@ Eddroid.Main.prototype = {
     flames = this.add.group();
     flames.createMultiple(100, 'destroy');
     flames.forEach(this.setupEnemy, this);
+    flames.forEach(this.setupRail, this)
 
 
 
@@ -81,6 +81,7 @@ Eddroid.Main.prototype = {
     this.player.animations.add('walk-right',[20,21,22,23,24]);
     this.player.animations.add('walk-left',[26,27,28,29,30]);
 
+    // spawnEnemies(10, 50, 100)
     enemies = this.add.group();
     enemies.enableBody = true;
     enemies.physicsBodyType = Phaser.Physics.ARCADE;
@@ -93,6 +94,50 @@ Eddroid.Main.prototype = {
     this.nextEnemyAt = 0;
     this.enemyDelay = 2000;
 
+
+    // spawnRails(10, 50, 100)
+    rails = this.add.group();
+    rails.enableBody = true;
+    rails.physicsBodyType = Phaser.Physics.ARCADE;
+    rails.createMultiple(10, 'rails');
+    rails.setAll('anchor.x', 1);
+    rails.setAll('anchor.y', 1);
+    rails.setAll('outOfBoundsKill', true);
+    rails.setAll('checkWorldBounds', true);
+
+
+    this.nextRailAt = 0;
+    this.railDelay = 2000;
+
+  //   for(i = 0; i < 20; i++){
+  //     if(i < 10){
+  //       enemies = this.add.group();
+  //       enemies.enableBody = true;
+  //       enemies.physicsBodyType = Phaser.Physics.ARCADE;
+  //       enemy = this.add.sprite('enemy');
+  //       enemies.setAll('anchor.x', 0.5);
+  //       enemies.setAll('anchor.y', 0.5);
+  //       enemies.setAll('outOfBoundsKill', true);
+  //       enemies.setAll('checkWorldBounds', true);
+  //       this.nextEnemyAt = 0;
+  //       this.enemyDelay = 2000;
+  //   } else {
+  //     rails = this.add.group();
+  //     rails.enableBody = true;
+  //     rails.physicsBodyType = Phaser.Physics.ARCADE;
+  //     rails = this.add.sprite(point.x, point.y, 'rails');
+  //     rails.setAll('anchor.x', 1);
+  //     rails.setAll('anchor.y', 1);
+  //     rails.setAll('outOfBoundsKill', true);
+  //     rails.setAll('checkWorldBounds', true);
+  //     this.nextRailAt = 0;
+  //     this.railDelay = 2000;
+  //   }
+  // }
+
+
+
+
   },
 
 
@@ -100,11 +145,16 @@ Eddroid.Main.prototype = {
 
   update:function() {
 
+    if(this.enemies == 0){
+      this.rails
+    }
+
     var health = 10;
 
     var counter = 0;
 
     this.physics.arcade.collide(rubies, enemies, this.collisionHandler, null, this);
+    this.physics.arcade.collide(rubies, rails, this.collisionHandler1, null, this);
 
     this.player.body.velocity.x = 0;
     this.player.body.velocity.y = 0;
@@ -187,15 +237,22 @@ Eddroid.Main.prototype = {
     if (this.nextEnemyAt < this.time.now && enemies.countDead() > 0) {
           this.nextEnemyAt = this.time.now + this.enemyDelay;
           var enemy = enemies.getFirstExists(false);
-          // spawn at a random location top of the screen
           enemy.reset(this.rnd.integerInRange(20, 780), 0);
-          // also randomize the speed
           enemy.body.velocity.y = this.rnd.integerInRange(30, 60);
         }
 
+        if (this.nextEnemyAt < this.time.now && rails.countDead() > 0) {
+              this.nextEnemyAt = this.time.now + this.enemyDelay;
+              var rail = rails.getFirstExists(false);
+              rail.reset(this.rnd.integerInRange(20, 780), 0);
+              rail.body.velocity.y = this.rnd.integerInRange(30, 60);
+            }
+
     this.physics.arcade.collide(this.player, enemies, this.playerHit, null, this);
+    this.physics.arcade.collide(this.player, rails, this.playerHit1, null, this);
 
    if (this.nextEnemyAt < this.time.now && enemies.countDead() > 0) {}
+   if (this.nextEnemyAt < this.time.now && rails.countDead() > 0) {}
   },
 
 
@@ -235,16 +292,18 @@ Eddroid.Main.prototype = {
 
 
   setupEnemy: function(enemy) {
-
     enemy.anchor.x = 0.5;
     enemy.anchor.y = 0.5;
     enemy.animations.add('destroy');
   },
 
-
-  descend: function(){
-    enemies.y += 100;
+  setupRail: function(rail) {
+    rail.anchor.x = 0.5;
+    rail.anchor.y = 0.5;
+    rail.animations.add('destroy');
   },
+
+
 
   collisionHandler: function(ruby, enemy) {
     ruby.kill();
@@ -255,11 +314,20 @@ Eddroid.Main.prototype = {
     gone.play('destroy', 20, false, true);
   },
 
+  collisionHandler1: function(ruby, rail) {
+    ruby.kill();
+    rail.kill();
+
+    var gone = flames.getFirstExists(false);
+    gone.reset(rail.body.x, rail.body.y);
+    gone.play('destroy', 20, false, true);
+  },
+
 
   managePause: function() {
     this.game.paused = true;
     var pausemenu = this.game.add.image(0,0,'pausemenu');
-    pausemenu.scale.setTo(0.2,0.2);
+    // pausemenu.scale.setTo(0.2,0.2);
     addP.onDown.add(function(){
         pausemenu.destroy();
         this.game.paused = false;
@@ -282,6 +350,22 @@ Eddroid.Main.prototype = {
      gone.play('destroy', 20, false, true);
 
    },
+
+   playerHit1: function (player, rail) {
+      rail.kill();
+
+     if (this.player.health > 1) {
+        this.player.health --;
+      } else {
+       this.player.kill();
+       this.state.start('Menu');
+      }
+
+      var gone = flames.getFirstExists(false);
+      gone.reset(this.player.body.x, this.player.body.y);
+      gone.play('destroy', 20, false, true);
+
+    },
 
 
 };
