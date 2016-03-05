@@ -1,28 +1,33 @@
-== README
+EDDROID
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+A video game created by Milad Zolnoor, Matt Kellough, Alvaro De Castro
 
-Things you may want to cover:
+In a world where technology rules, programming languages have run rampant in the Realm of Wyncode. Only one man can debug these creatures and rescue the city from their grasp,
 
-* Ruby version
+EDDROID!
 
-* System dependencies
+Join EDDROID and use his Ruby powers on his journey to conquer the evil twins HTML & CSS, RAILS and JAVASCRIPT.
 
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+Will you sit by idly as EDDROID conquers every programming language in the Realm of Wyncode?
+Or will you strap on your Ruby gem blaster, become a developer, and help him debug?
 
 
-Please feel free to use a different markup language if you do not plan to run
-<tt>rake doc:app</tt>.
+Enemies you will encounter:
+
+HyperText Markup Language, or the one they call HTML, is the standard markup language used to create world web pages.
+Along with CSS, and JavaScript, HTML is used by most world websites to create visually engaging world web pages.
+Even the most inept of the ancient World Web browsers (Internet Explorer) can read HTML files.
+
+Cascading Style Sheets, aka CSS, is HTML’s more sinister brother.
+Visually more powerful, it is used for describing the presentation of a document written in HTML or Javascript.
+Although most often used to set the visual style of world web pages.
+Along with HTML and JavaScript, CSS is a cornerstone technology used by most websites to create visually engaging webpages.
+
+RAILS, is one of Ruby’s fallen allies.
+Rails, is a web application framework crafted in the great Ruby language, under supervision of the Scholars of MIT.
+(EDDROID is the strongest of these Scholars.) Rails is a model–view–controller (MVC) framework, providing default structures for a database, a world web service, and web pages.
+It encourages and facilitates the use of  HTML, CSS and JavaScript for display and user interfacing.
+
+JavaScript is a dynamic language. With some serious bugs!
+It has been standardized by the clan of ECMA.
+A sidekick of the evil twins HTML and CSS, it is one of the three essential technologies of the World Web.
