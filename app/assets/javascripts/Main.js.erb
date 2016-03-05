@@ -22,6 +22,8 @@ Eddroid.Main = function(game){
   this.playerHit;
   this.rails;
   this.playerHit1;
+  this.score = 0;
+  this.scoreString;
 
 };
 Eddroid.Main.prototype = {
@@ -41,7 +43,7 @@ Eddroid.Main.prototype = {
     this.physics.startSystem(Phaser.Physics.ARCADE);
     map = this.add.sprite(0, 0, 'map');
 
-    this.player = this.add.sprite(point.x, point.y, 'Eddroid');
+    this.player = this.add.sprite(1000, 1000, 'Eddroid');
     this.player.health = 10;
 
     rubies = this.add.group();
@@ -92,7 +94,7 @@ Eddroid.Main.prototype = {
     enemies.setAll('checkWorldBounds', true);
 
     this.nextEnemyAt = 0;
-    this.enemyDelay = 2000;
+    this.enemyDelay = 100;
 
 
     // spawnRails(10, 50, 100)
@@ -100,14 +102,22 @@ Eddroid.Main.prototype = {
     rails.enableBody = true;
     rails.physicsBodyType = Phaser.Physics.ARCADE;
     rails.createMultiple(10, 'rails');
-    rails.setAll('anchor.x', 1);
-    rails.setAll('anchor.y', 1);
+    rails.setAll('anchor.x', 0.5);
+    rails.setAll('anchor.y', 0.5);
     rails.setAll('outOfBoundsKill', true);
     rails.setAll('checkWorldBounds', true);
 
 
     this.nextRailAt = 0;
-    this.railDelay = 2000;
+    this.railDelay = 500;
+
+    // enemies.x = this.rnd.integerInRange(0, 4800);
+    // enemies.y = this.rnd.integerInRange(0, 4800);
+    // enemy.integerInRange.y(0, 4800);
+    // enemy.body.velocity.x = this.rnd.integerInRange(30, 60);
+
+    // rails.x = 1000;
+    // rails.y = 1000;
 
   //   for(i = 0; i < 20; i++){
   //     if(i < 10){
@@ -137,7 +147,8 @@ Eddroid.Main.prototype = {
 
 
 
-
+      scoreString = 'Score : ';
+      scoreText = this.add.text(10, 10, this.scoreString + this.score, { font: '34px Arial', fill: '#fff' });
   },
 
 
@@ -238,14 +249,14 @@ Eddroid.Main.prototype = {
           this.nextEnemyAt = this.time.now + this.enemyDelay;
           var enemy = enemies.getFirstExists(false);
           enemy.reset(this.rnd.integerInRange(20, 780), 0);
-          enemy.body.velocity.y = this.rnd.integerInRange(30, 60);
+          enemy.body.velocity.y = this.rnd.integerInRange(50, 60);
         }
 
         if (this.nextEnemyAt < this.time.now && rails.countDead() > 0) {
               this.nextEnemyAt = this.time.now + this.enemyDelay;
               var rail = rails.getFirstExists(false);
               rail.reset(this.rnd.integerInRange(20, 780), 0);
-              rail.body.velocity.y = this.rnd.integerInRange(30, 60);
+              rail.body.velocity.y = this.rnd.integerInRange(60, 70);
             }
 
     this.physics.arcade.collide(this.player, enemies, this.playerHit, null, this);
@@ -309,6 +320,9 @@ Eddroid.Main.prototype = {
     ruby.kill();
     enemy.kill();
 
+    this.score += 20;
+    scoreText.text = scoreString + this.score;
+
     var gone = flames.getFirstExists(false);
     gone.reset(enemy.body.x, enemy.body.y);
     gone.play('destroy', 20, false, true);
@@ -317,6 +331,9 @@ Eddroid.Main.prototype = {
   collisionHandler1: function(ruby, rail) {
     ruby.kill();
     rail.kill();
+
+    this.score += 50;
+    scoreText.text = scoreString + this.score;
 
     var gone = flames.getFirstExists(false);
     gone.reset(rail.body.x, rail.body.y);
@@ -366,6 +383,12 @@ Eddroid.Main.prototype = {
       gone.play('destroy', 20, false, true);
 
     },
+
+
+  score:function() {
+
+  }
+
 
 
 };
