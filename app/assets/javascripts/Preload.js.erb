@@ -37,6 +37,7 @@ Eddroid.Preload.prototype = {
     this.load.image('rails', '<%= image_path 'railsE.png' %>');
     this.load.image('css', '<%= image_path 'cssE.png' %>');
     this.load.image('javascript', '<%= image_path 'javaE.png' %>');
+    this.load.audio('music','<%= audio_path 'music.mp3' %>')
 
 
 
@@ -45,15 +46,15 @@ Eddroid.Preload.prototype = {
   create: function() {
   },
 
-//   addGameMusic:function() {
-//   music = game.add.audio('');
-//   music.loop = true;
-//   music.play();
-// },
+  addGameMusic:function() {
+  music = game.add.audio('music');
+  music.loop = true;
+  music.play();
+},
 
   update: function() {
     this.ready = true;
     this.state.start('Menu');
-    // this.addGameMusic();
+    this.addGameMusic();
   }
 };

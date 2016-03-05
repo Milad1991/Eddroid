@@ -26,6 +26,8 @@ Eddroid.Main = function(game){
   this.scoreString;
   this.cascades;
   this.javascripts;
+  this.lives = 10;
+  this.livesString;
 
 };
 Eddroid.Main.prototype = {
@@ -84,7 +86,7 @@ Eddroid.Main.prototype = {
     enemies = this.add.group();
     enemies.enableBody = true;
     enemies.physicsBodyType = Phaser.Physics.ARCADE;
-    enemies.createMultiple(10, 'enemy');
+    enemies.createMultiple(50, 'enemy');
     enemies.setAll('anchor.x', 0.5);
     enemies.setAll('anchor.y', 0.5);
     enemies.setAll('outOfBoundsKill', true);
@@ -96,7 +98,7 @@ Eddroid.Main.prototype = {
     rails = this.add.group();
     rails.enableBody = true;
     rails.physicsBodyType = Phaser.Physics.ARCADE;
-    rails.createMultiple(20, 'rails');
+    rails.createMultiple(60, 'rails');
     rails.setAll('anchor.x', 0.5);
     rails.setAll('anchor.y', 0.5);
     rails.setAll('outOfBoundsKill', true);
@@ -110,7 +112,7 @@ Eddroid.Main.prototype = {
     cascades.enableBody = true;
     cascades.enableBody = true;
     cascades.physicsBodyType = Phaser.Physics.ARCADE;
-    cascades.createMultiple(30, 'css');
+    cascades.createMultiple(70, 'css');
     cascades.setAll('anchor.x', 0.5);
     cascades.setAll('anchor.y', 0.5);
     cascades.setAll('outOfBoundsKill', true);
@@ -123,7 +125,7 @@ Eddroid.Main.prototype = {
     javascripts.enableBody = true;
     javascripts.enableBody = true;
     javascripts.physicsBodyType = Phaser.Physics.ARCADE;
-    javascripts.createMultiple(30, 'javascript');
+    javascripts.createMultiple(80, 'javascript');
     javascripts.setAll('anchor.x', 0.5);
     javascripts.setAll('anchor.y', 0.5);
     javascripts.setAll('outOfBoundsKill', true);
@@ -133,7 +135,17 @@ Eddroid.Main.prototype = {
     this.javascriptDelay = 100;
 
     scoreString = 'Score: ';
-    scoreText = this.add.text(this.player.body.x - 500, this.player.body.y - 400, this.scoreString + this.score, { font: '50px Arial', fill: '#fff' });
+    scoreText = this.add.text(0, 0, this.score, { font: '30px Arial', fill: '#fff' });
+    scoreText.fixedToCamera = true;
+    scoreString.fixedToCamera = true;
+    console.log(scoreText);
+
+    livesString = 'Lives: ';
+    livesText = this.add.text(690, 0, this.lives, { font: '30px Arial', fill: '#fff' });
+    livesText.fixedToCamera = true;
+    livesString.fixedToCamera = true;
+
+
   },
 
 
@@ -228,28 +240,28 @@ Eddroid.Main.prototype = {
     if (this.nextEnemyAt < this.time.now && enemies.countDead() > 0) {
       this.nextEnemyAt = this.time.now + this.enemyDelay;
       var enemy = enemies.getFirstExists(false);
-      enemy.reset(this.rnd.integerInRange(20, 780), 0);
+      enemy.reset(this.rnd.integerInRange(0, 4800), 0);
       enemy.body.velocity.y = this.rnd.integerInRange(100, 110);
     }
 
     if (this.nextEnemyAt < this.time.now && rails.countDead() > 0) {
       this.nextEnemyAt = this.time.now + this.enemyDelay;
       var rail = rails.getFirstExists(false);
-      rail.reset(this.rnd.integerInRange(20, 780), 0);
+      rail.reset(this.rnd.integerInRange(0, 4800), 0);
       rail.body.velocity.y = this.rnd.integerInRange(120, 130);
     }
 
     if (this.nextEnemyAt < this.time.now && cascades.countDead() > 0) {
       this.nextEnemyAt = this.time.now + this.enemyDelay;
       var cascade = cascades.getFirstExists(false);
-      cascade.reset(this.rnd.integerInRange(20, 780), 0);
+      cascade.reset(this.rnd.integerInRange(0, 4800), 0);
       cascade.body.velocity.y = this.rnd.integerInRange(150, 160);
     }
 
     if (this.nextEnemyAt < this.time.now && javascripts.countDead() > 0) {
       this.nextEnemyAt = this.time.now + this.enemyDelay;
       var javascript = javascripts.getFirstExists(false);
-      javascript.reset(this.rnd.integerInRange(20, 780), 0);
+      javascript.reset(this.rnd.integerInRange(0, 4800), 0);
       javascript.body.velocity.y = this.rnd.integerInRange(100, 600);
     }
 
@@ -339,7 +351,7 @@ Eddroid.Main.prototype = {
     ruby.kill();
     rail.kill();
 
-    this.score += 50;
+    this.score += 30;
     scoreText.text = scoreString + this.score;
 
     var gone = flames.getFirstExists(false);
@@ -363,7 +375,7 @@ Eddroid.Main.prototype = {
     ruby.kill();
     javascript.kill();
 
-    this.score += 10;
+    this.score += 50;
     scoreText.text = scoreString + this.score;
 
     var gone = flames.getFirstExists(false);
@@ -374,7 +386,7 @@ Eddroid.Main.prototype = {
   managePause: function() {
     this.game.paused = true;
     var pausemenu = this.game.add.image(0,0,'pausemenu');
-    // pausemenu.scale.setTo(0.2,0.2);
+    pausemenu.fixedToCamera = true;
     addP.onDown.add(function(){
       pausemenu.destroy();
       this.game.paused = false;
@@ -385,10 +397,17 @@ Eddroid.Main.prototype = {
   playerHit: function (player, enemy) {
     enemy.kill();
 
+    this.score += 10;
+    scoreText.text = scoreString + this.score;
+
+    this.lives -= 1;
+    livesText.text = livesString + this.lives;
+
     if (this.player.health > 1) {
       this.player.health --;
     } else {
       this.player.kill();
+      alert(scoreText._text);
       this.state.start('Menu');
     }
 
@@ -401,10 +420,17 @@ Eddroid.Main.prototype = {
   playerHit1: function (player, rail) {
     rail.kill();
 
+    this.score += 30;
+    scoreText.text = scoreString + this.score;
+
+    this.lives -= 1;
+    livesText.text = livesString + this.lives;
+
     if (this.player.health > 1) {
       this.player.health --;
     } else {
       this.player.kill();
+      alert(scoreText._text);
       this.state.start('Menu');
     }
 
@@ -421,8 +447,15 @@ Eddroid.Main.prototype = {
       this.player.health --;
     } else {
       this.player.kill();
+      alert(scoreText._text);
       this.state.start('Menu');
     }
+
+    this.score += 15;
+    scoreText.text = scoreString + this.score;
+
+    this.lives -= 1;
+    livesText.text = livesString + this.lives;
 
     var gone = flames.getFirstExists(false);
     gone.reset(this.player.body.x, this.player.body.y);
@@ -437,8 +470,15 @@ Eddroid.Main.prototype = {
       this.player.health --;
     } else {
       this.player.kill();
+      alert(scoreText._text);
       this.state.start('Menu');
     }
+
+    this.score += 50;
+    scoreText.text = scoreString + this.score;
+
+    this.lives -= 1;
+    livesText.text = livesString + this.lives;
 
     var gone = flames.getFirstExists(false);
     gone.reset(this.player.body.x, this.player.body.y);
