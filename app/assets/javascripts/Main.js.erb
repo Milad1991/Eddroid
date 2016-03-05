@@ -47,7 +47,7 @@ Eddroid.Main.prototype = {
     this.physics.startSystem(Phaser.Physics.ARCADE);
     map = this.add.sprite(0, 0, 'map');
 
-    this.player = this.add.sprite(1000, 1000, 'Eddroid');
+    this.player = this.add.sprite(game.world.centerX, game.world.centerY, 'Eddroid');
     this.player.health = 10;
 
     rubies = this.add.group();
