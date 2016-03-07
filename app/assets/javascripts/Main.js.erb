@@ -119,13 +119,13 @@ Eddroid.Main.prototype = {
     cascades.setAll('checkWorldBounds', true);
 
     this.nextCascadeAt = 0;
-    this.cascadeDelay = 300;
+    this.cascadeDelay = 100;
 
     javascripts = this.add.group();
     javascripts.enableBody = true;
     javascripts.enableBody = true;
     javascripts.physicsBodyType = Phaser.Physics.ARCADE;
-    javascripts.createMultiple(80, 'javascript');
+    javascripts.createMultiple(150, 'javascript');
     javascripts.setAll('anchor.x', 0.5);
     javascripts.setAll('anchor.y', 0.5);
     javascripts.setAll('outOfBoundsKill', true);
@@ -241,28 +241,28 @@ Eddroid.Main.prototype = {
       this.nextEnemyAt = this.time.now + this.enemyDelay;
       var enemy = enemies.getFirstExists(false);
       enemy.reset(this.rnd.integerInRange(0, 4800), 0);
-      enemy.body.velocity.y = this.rnd.integerInRange(100, 110);
+      enemy.body.velocity.y = this.rnd.integerInRange(150, 200);
     }
 
     if (this.nextEnemyAt < this.time.now && rails.countDead() > 0) {
       this.nextEnemyAt = this.time.now + this.enemyDelay;
       var rail = rails.getFirstExists(false);
       rail.reset(this.rnd.integerInRange(0, 4800), 0);
-      rail.body.velocity.y = this.rnd.integerInRange(120, 130);
+      rail.body.velocity.y = this.rnd.integerInRange(210, 250);
     }
 
     if (this.nextEnemyAt < this.time.now && cascades.countDead() > 0) {
       this.nextEnemyAt = this.time.now + this.enemyDelay;
       var cascade = cascades.getFirstExists(false);
       cascade.reset(this.rnd.integerInRange(0, 4800), 0);
-      cascade.body.velocity.y = this.rnd.integerInRange(150, 160);
+      cascade.body.velocity.y = this.rnd.integerInRange(260, 300);
     }
 
     if (this.nextEnemyAt < this.time.now && javascripts.countDead() > 0) {
       this.nextEnemyAt = this.time.now + this.enemyDelay;
       var javascript = javascripts.getFirstExists(false);
       javascript.reset(this.rnd.integerInRange(0, 4800), 0);
-      javascript.body.velocity.y = this.rnd.integerInRange(100, 600);
+      javascript.body.velocity.y = this.rnd.integerInRange(350, 600);
     }
 
     this.physics.arcade.collide(this.player, enemies, this.playerHit, null, this);
