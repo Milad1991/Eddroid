@@ -32,7 +32,6 @@ Eddroid.Main = function(game){
 };
 Eddroid.Main.prototype = {
 
-  // All preloading is done in preload.js
   preload: function() {
 
   },
@@ -40,35 +39,28 @@ Eddroid.Main.prototype = {
 
   create: function(){
 
-    // setting playerDirection to 0 when using later for walking animations at angles
+
     this.playerDirection = 0;
     point = new Phaser.Point(0, 0);
 
-    // 4800 x 4800 is the size of the map (150 tiles * 32 px/tile)
     this.world.setBounds(0,0,4800,4800);
     this.physics.startSystem(Phaser.Physics.ARCADE);
     map = this.add.sprite(0, 0, 'map');
 
-    // Setting player in game as sprite in order to enable it to have physics i.e. health
-    this.player = this.add.sprite(game.world.centerX, game.world.centerY + 400, 'Eddroid');
+    this.player = this.add.sprite(game.world.centerX, game.world.centerY, 'Eddroid');
     this.player.health = 10;
 
-    // Creating bullets (rubies) as a group in order to work with collision handlers
     rubies = this.add.group();
     rubies.enableBody = true;
     rubies.physicsBodyType = Phaser.Physics.ARCADE;
     this.nextShotAt = 0;
     this.shotDelay = 100;
 
-    // Goes to fire function
     this.fire();
 
-    // enabling player physics
     this.physics.enable(this.player, Phaser.Physics.ARCADE);
     this.player.body.drag.set(100);
     this.player.body.maxVelocity.set(200);
-
-    // Enabling the necessary cursor keys Eddroid is going to use in-game
     cursors = this.input.keyboard.createCursorKeys();
     addA = this.input.keyboard.addKey(Phaser.Keyboard.A)
     addS = this.input.keyboard.addKey(Phaser.Keyboard.S)
@@ -77,24 +69,20 @@ Eddroid.Main.prototype = {
     this.fireButton = this.game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR)
     addP = this.input.keyboard.addKey(Phaser.Keyboard.P)
 
-    // Creating explosion effect as a group in order to use as in collision handlers
     flames = this.add.group();
     flames.createMultiple(100, 'destroy');
     flames.forEach(this.setupEnemy, this);
     flames.forEach(this.setupRail, this)
 
 
-    // camera feature to follow player around map and not be solely fixated on one quadrant
+
     this.camera.follow(this.player, Phaser.Camera.FOLLOW_TOPDOWN);
     this.player.body.collideWorldBounds = true;
-
-    // Going through array of spritesheet (Eddroid.png) and creating animations for each movement
     this.player.animations.add('walk-down',[0,1,2,3,4,5,6,7]);
     this.player.animations.add('walk-up',[10,11,12,13,14,15,16]);
     this.player.animations.add('walk-right',[20,21,22,23,24]);
     this.player.animations.add('walk-left',[26,27,28,29,30]);
 
-    // HTML5 enemy group, createMultiple (Once one is killed, 50 will spawn in its place)
     enemies = this.add.group();
     enemies.enableBody = true;
     enemies.physicsBodyType = Phaser.Physics.ARCADE;
@@ -105,9 +93,8 @@ Eddroid.Main.prototype = {
     enemies.setAll('checkWorldBounds', true);
 
     this.nextEnemyAt = 0;
-    this.enemyDelay = 60;
+    this.enemyDelay = 100;
 
-    // Same as enemies group but rails enemy
     rails = this.add.group();
     rails.enableBody = true;
     rails.physicsBodyType = Phaser.Physics.ARCADE;
@@ -119,9 +106,8 @@ Eddroid.Main.prototype = {
 
 
     this.nextRailAt = 0;
-    this.railDelay = 50;
+    this.railDelay = 200;
 
-    // CSS enemy group
     cascades = this.add.group();
     cascades.enableBody = true;
     cascades.enableBody = true;
@@ -133,9 +119,8 @@ Eddroid.Main.prototype = {
     cascades.setAll('checkWorldBounds', true);
 
     this.nextCascadeAt = 0;
-    this.cascadeDelay = 50;
+    this.cascadeDelay = 300;
 
-    // Javascript enemy group
     javascripts = this.add.group();
     javascripts.enableBody = true;
     javascripts.enableBody = true;
@@ -147,15 +132,14 @@ Eddroid.Main.prototype = {
     javascripts.setAll('checkWorldBounds', true);
 
     this.nextJavascriptAt = 0;
-    this.javascriptDelay = 50;
+    this.javascriptDelay = 100;
 
-    // Score feature + Fixed to camera keeps the score fixed on the canvas and not in a fixed coordinate postion on map
     scoreString = 'Score: ';
     scoreText = this.add.text(0, 0, this.score, { font: '30px Arial', fill: '#fff' });
     scoreText.fixedToCamera = true;
     scoreString.fixedToCamera = true;
+    console.log(scoreText);
 
-    // Lives feature
     livesString = 'Lives: ';
     livesText = this.add.text(690, 0, this.lives, { font: '30px Arial', fill: '#fff' });
     livesText.fixedToCamera = true;
@@ -171,14 +155,12 @@ Eddroid.Main.prototype = {
 
     var counter = 0;
 
-    // When 1st arg and 2nd arg overlap, then collisionHandler function will come into effect.
-    // The reason for creating everything in groups
     this.physics.arcade.collide(rubies, enemies, this.collisionHandler, null, this);
     this.physics.arcade.collide(rubies, rails, this.collisionHandler1, null, this);
     this.physics.arcade.collide(rubies, cascades, this.collisionHandler2, null, this);
     this.physics.arcade.collide(rubies, javascripts, this.collisionHandler3, null, this);
 
-    // Delays on animations to make walking appear more fluid and not glitchy
+
     this.player.body.velocity.x = 0;
     this.player.body.velocity.y = 0;
     this.player.animations.getAnimation('walk-left').delay = 50;
@@ -187,7 +169,7 @@ Eddroid.Main.prototype = {
     this.player.animations.getAnimation('walk-down').delay = 50;
 
 
-    // Boolean logic to set animations to respective cursor keys
+
     if (cursors.left.isDown || addA.isDown)
     {
       this.player.animations.play('walk-left');
@@ -243,53 +225,46 @@ Eddroid.Main.prototype = {
       this.playerDirection = 270;
     }
 
-    // Pressing P will go to the managePausepause function created below
     if (addP.isDown)
     {
       this.managePause();
     }
 
-    // fireButton (space bar) will go to fire function created below
     if(this.fireButton.isDown)
     {
       this.fire();
     }
 
-    // Bringing flames to front of screen so they appear over the enemies
     this.game.world.bringToTop(flames);
 
-    // enemy spawn details
     if (this.nextEnemyAt < this.time.now && enemies.countDead() > 0) {
       this.nextEnemyAt = this.time.now + this.enemyDelay;
       var enemy = enemies.getFirstExists(false);
-      // this will spawn enemy at a random point along the x axis bc first arg is beginning coordinate of x and 2nd arg is 4800 (last coordinate on x axis)
       enemy.reset(this.rnd.integerInRange(0, 4800), 0);
-      // this spawns enemies with a random speed inbetween 150 & 200
-      enemy.body.velocity.y = this.rnd.integerInRange(150, 200);
+      enemy.body.velocity.y = this.rnd.integerInRange(100, 110);
     }
 
     if (this.nextEnemyAt < this.time.now && rails.countDead() > 0) {
       this.nextEnemyAt = this.time.now + this.enemyDelay;
       var rail = rails.getFirstExists(false);
       rail.reset(this.rnd.integerInRange(0, 4800), 0);
-      rail.body.velocity.y = this.rnd.integerInRange(210, 250);
+      rail.body.velocity.y = this.rnd.integerInRange(120, 130);
     }
 
     if (this.nextEnemyAt < this.time.now && cascades.countDead() > 0) {
       this.nextEnemyAt = this.time.now + this.enemyDelay;
       var cascade = cascades.getFirstExists(false);
       cascade.reset(this.rnd.integerInRange(0, 4800), 0);
-      cascade.body.velocity.y = this.rnd.integerInRange(260, 300);
+      cascade.body.velocity.y = this.rnd.integerInRange(150, 160);
     }
 
     if (this.nextEnemyAt < this.time.now && javascripts.countDead() > 0) {
       this.nextEnemyAt = this.time.now + this.enemyDelay;
       var javascript = javascripts.getFirstExists(false);
       javascript.reset(this.rnd.integerInRange(0, 4800), 0);
-      javascript.body.velocity.y = this.rnd.integerInRange(350, 600);
+      javascript.body.velocity.y = this.rnd.integerInRange(100, 600);
     }
 
-    // Collision handlers created so when player and enemies overlap playerHit function will happen
     this.physics.arcade.collide(this.player, enemies, this.playerHit, null, this);
     this.physics.arcade.collide(this.player, rails, this.playerHit1, null, this);
     this.physics.arcade.collide(this.player, cascades, this.playerHit2, null, this);
@@ -312,26 +287,19 @@ Eddroid.Main.prototype = {
 
     this.nextShotAt = this.time.now + this.shotDelay;
 
-    // When fire function is engaged rubies (bullets) will be created
-    // Anchored on the player coordinates
     var ruby = rubies.create(this.player.x, this.player.y - 20, 'ruby');
     this.physics.enable(ruby, Phaser.Physics.ARCADE);
-    // Player directions created in regards of right angles to have bullets leave player in correct direction
     if (this.playerDirection === 90 || this.playerDirection === 270) {
       ruby.body.velocity.x = this.playerDirection === 90 ? 500 : -500
     } else {
       ruby.body.velocity.y = this.playerDirection === 0 ? 500 : -500
     }
-    // if walking right then bullets will exit and travel to the east
     if (this.playerDirection === 90) {
       ruby.anchor.setTo(-2.62, -2.1);
-    // if walking left then bullets will exit and travel to the west
     } else if (this.playerDirection === 270) {
       ruby.anchor.setTo(0.4 , -2.1);
-    // if walking down then bullets will exit and travel to the south
     } else if (this.playerDirection === 180) {
       ruby.anchor.setTo(-1.8, -2);
-    // if walking up then bullets will exit and travel to the north
     } else if (this.playerDirection === 0) {
       ruby.anchor.setTo(-0.3, -4);
     } else {
@@ -367,23 +335,18 @@ Eddroid.Main.prototype = {
   },
 
 
-  // When ruby group and enemy group (HTML5) overlap
   collisionHandler: function(ruby, enemy) {
-    // Both ruby and enemy will dissappear with the kill function (global function)
     ruby.kill();
     enemy.kill();
 
-    // Score increments by 10
     this.score += 10;
     scoreText.text = scoreString + this.score;
 
-    // the explosion animation is created
     var gone = flames.getFirstExists(false);
     gone.reset(enemy.body.x, enemy.body.y);
     gone.play('destroy', 20, false, true);
   },
 
-  // When ruby group and rail group
   collisionHandler1: function(ruby, rail) {
     ruby.kill();
     rail.kill();
@@ -396,7 +359,6 @@ Eddroid.Main.prototype = {
     gone.play('destroy', 20, false, true);
   },
 
-  // When ruby group and CSS group
   collisionHandler2: function(ruby, cascade) {
     ruby.kill();
     cascade.kill();
@@ -409,7 +371,6 @@ Eddroid.Main.prototype = {
     gone.play('destroy', 20, false, true);
   },
 
-  // When ruby group and Javascript group
   collisionHandler3: function(ruby, javascript) {
     ruby.kill();
     javascript.kill();
@@ -422,7 +383,6 @@ Eddroid.Main.prototype = {
     gone.play('destroy', 20, false, true);
   },
 
- //Pause function
   managePause: function() {
     this.game.paused = true;
     var pausemenu = this.game.add.image(0,0,'pausemenu');
@@ -433,7 +393,7 @@ Eddroid.Main.prototype = {
     }, this);
   },
 
-  // Same thing as enemy and ruby collision handler except meant for player and enemy now
+
   playerHit: function (player, enemy) {
     enemy.kill();
 
@@ -443,7 +403,6 @@ Eddroid.Main.prototype = {
     this.lives -= 1;
     livesText.text = livesString + this.lives;
 
-    // So player won't dissapear (be killed) unless health reaches 1
     if (this.player.health > 1) {
       this.player.health --;
     } else {
@@ -458,7 +417,6 @@ Eddroid.Main.prototype = {
 
   },
 
-  // Same as playerHit but with rail enemy
   playerHit1: function (player, rail) {
     rail.kill();
 
@@ -481,7 +439,7 @@ Eddroid.Main.prototype = {
     gone.play('destroy', 20, false, true);
 
   },
-  // Same as playerHit but with css enemy
+
   playerHit2: function (player, cascade) {
     cascade.kill();
 
@@ -505,7 +463,6 @@ Eddroid.Main.prototype = {
 
   },
 
-  // Same as playerHit but with javascript enemy
   playerHit3: function (player, javascript) {
     javascript.kill();
 
