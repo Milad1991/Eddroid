@@ -47,7 +47,7 @@ Eddroid.Main.prototype = {
     this.physics.startSystem(Phaser.Physics.ARCADE);
     map = this.add.sprite(0, 0, 'map');
 
-    this.player = this.add.sprite(game.world.centerX, game.world.centerY, 'Eddroid');
+    this.player = this.add.sprite(game.world.centerX, game.world.centerY + 400, 'Eddroid');
     this.player.health = 10;
 
     rubies = this.add.group();
@@ -93,7 +93,7 @@ Eddroid.Main.prototype = {
     enemies.setAll('checkWorldBounds', true);
 
     this.nextEnemyAt = 0;
-    this.enemyDelay = 100;
+    this.enemyDelay = 60;
 
     rails = this.add.group();
     rails.enableBody = true;
@@ -106,7 +106,7 @@ Eddroid.Main.prototype = {
 
 
     this.nextRailAt = 0;
-    this.railDelay = 200;
+    this.railDelay = 50;
 
     cascades = this.add.group();
     cascades.enableBody = true;
@@ -119,20 +119,20 @@ Eddroid.Main.prototype = {
     cascades.setAll('checkWorldBounds', true);
 
     this.nextCascadeAt = 0;
-    this.cascadeDelay = 100;
+    this.cascadeDelay = 50;
 
     javascripts = this.add.group();
     javascripts.enableBody = true;
     javascripts.enableBody = true;
     javascripts.physicsBodyType = Phaser.Physics.ARCADE;
-    javascripts.createMultiple(150, 'javascript');
+    javascripts.createMultiple(80, 'javascript');
     javascripts.setAll('anchor.x', 0.5);
     javascripts.setAll('anchor.y', 0.5);
     javascripts.setAll('outOfBoundsKill', true);
     javascripts.setAll('checkWorldBounds', true);
 
     this.nextJavascriptAt = 0;
-    this.javascriptDelay = 100;
+    this.javascriptDelay = 50;
 
     scoreString = 'Score: ';
     scoreText = this.add.text(0, 0, this.score, { font: '30px Arial', fill: '#fff' });
