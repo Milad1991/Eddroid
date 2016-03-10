@@ -30,6 +30,7 @@ Eddroid.Main = function(game){
   this.livesString;
 
 };
+
 Eddroid.Main.prototype = {
 
   preload: function() {
@@ -38,7 +39,6 @@ Eddroid.Main.prototype = {
 
 
   create: function(){
-
 
     this.playerDirection = 0;
     point = new Phaser.Point(0, 0);
@@ -73,8 +73,6 @@ Eddroid.Main.prototype = {
     flames.createMultiple(100, 'destroy');
     flames.forEach(this.setupEnemy, this);
     flames.forEach(this.setupRail, this)
-
-
 
     this.camera.follow(this.player, Phaser.Camera.FOLLOW_TOPDOWN);
     this.player.body.collideWorldBounds = true;
@@ -151,14 +149,10 @@ Eddroid.Main.prototype = {
 
   update:function() {
 
-    // var health = 10;
-    // var counter = 0;
-
     this.physics.arcade.collide(rubies, enemies, this.collisionHandler, null, this);
     this.physics.arcade.collide(rubies, rails, this.collisionHandler1, null, this);
     this.physics.arcade.collide(rubies, cascades, this.collisionHandler2, null, this);
     this.physics.arcade.collide(rubies, javascripts, this.collisionHandler3, null, this);
-
 
     this.player.body.velocity.x = 0;
     this.player.body.velocity.y = 0;
@@ -166,8 +160,6 @@ Eddroid.Main.prototype = {
     this.player.animations.getAnimation('walk-right').delay = 50;
     this.player.animations.getAnimation('walk-up').delay = 50;
     this.player.animations.getAnimation('walk-down').delay = 50;
-
-
 
     if (cursors.left.isDown || addA.isDown)
     {
@@ -278,7 +270,6 @@ Eddroid.Main.prototype = {
   },
 
 
-
   fire:function() {
     if (this.nextShotAt > this.time.now) {
       return;
@@ -305,7 +296,6 @@ Eddroid.Main.prototype = {
       ruby.anchor.setTo(0, 0);
     }
 
-
   },
 
 
@@ -321,11 +311,13 @@ Eddroid.Main.prototype = {
     rail.animations.add('destroy');
   },
 
+
   setupCss: function(cascade) {
     cascade.anchor.x = 0.5;
     cascade.anchor.y = 0.5;
     cascade.animations.add('destroy');
   },
+
 
   setupJavascript: function(javascript) {
     javascript.anchor.x = 0.5;
@@ -346,6 +338,7 @@ Eddroid.Main.prototype = {
     gone.play('destroy', 20, false, true);
   },
 
+
   collisionHandler1: function(ruby, rail) {
     ruby.kill();
     rail.kill();
@@ -357,6 +350,7 @@ Eddroid.Main.prototype = {
     gone.reset(rail.body.x, rail.body.y);
     gone.play('destroy', 20, false, true);
   },
+
 
   collisionHandler2: function(ruby, cascade) {
     ruby.kill();
@@ -370,6 +364,7 @@ Eddroid.Main.prototype = {
     gone.play('destroy', 20, false, true);
   },
 
+
   collisionHandler3: function(ruby, javascript) {
     ruby.kill();
     javascript.kill();
@@ -381,6 +376,7 @@ Eddroid.Main.prototype = {
     gone.reset(javascript.body.x, javascript.body.y);
     gone.play('destroy', 20, false, true);
   },
+
 
   managePause: function() {
     this.game.paused = true;
@@ -396,7 +392,6 @@ Eddroid.Main.prototype = {
   playerHit: function (player, enemy) {
     enemy.kill();
 
-    // this.score += 10;
     scoreText.text = scoreString + this.score;
 
     this.player.health -= 1;
@@ -410,17 +405,16 @@ Eddroid.Main.prototype = {
       this.state.start('Menu');
     }
 
-
     var gone = flames.getFirstExists(false);
     gone.reset(this.player.body.x, this.player.body.y);
     gone.play('destroy', 20, false, true);
 
   },
+
 
   playerHit1: function (player, rail) {
     rail.kill();
 
-    // this.score += 30;
     scoreText.text = scoreString + this.score;
 
     this.player.health -= 1;
@@ -440,6 +434,7 @@ Eddroid.Main.prototype = {
     gone.play('destroy', 20, false, true);
 
   },
+
 
   playerHit2: function (player, cascade) {
     cascade.kill();
@@ -458,14 +453,12 @@ Eddroid.Main.prototype = {
 
     }
 
-    // this.score += 15;
-
-
     var gone = flames.getFirstExists(false);
     gone.reset(this.player.body.x, this.player.body.y);
     gone.play('destroy', 20, false, true);
 
   },
+
 
   playerHit3: function (player, javascript) {
     javascript.kill();
@@ -484,17 +477,16 @@ Eddroid.Main.prototype = {
 
     }
 
-    // this.score += 50;
-
-
     var gone = flames.getFirstExists(false);
     gone.reset(this.player.body.x, this.player.body.y);
     gone.play('destroy', 20, false, true);
 
   },
 
+
   score:function() {
 
   }
+  
 
 };
