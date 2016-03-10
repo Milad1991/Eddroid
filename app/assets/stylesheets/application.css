@@ -22,8 +22,8 @@ canvas {
 
 
 body {
-  /*background: #000000;*/
-  background: url("bg.jpg");
+  background: #000000;
+  /*background: url("bg.jpg");*/
 }
 
 nav {
