@@ -135,13 +135,13 @@ Eddroid.Main.prototype = {
     this.javascriptDelay = 100;
 
     scoreString = 'Score: ';
-    scoreText = this.add.text(0, 0, this.score, { font: '30px Arial', fill: '#fff' });
+    scoreText = this.add.text(0, 0, scoreString + this.score, { font: '30px Arial', fill: '#fff' });
     scoreText.fixedToCamera = true;
     scoreString.fixedToCamera = true;
     console.log(scoreText);
 
     livesString = 'Lives: ';
-    livesText = this.add.text(690, 0, this.lives, { font: '30px Arial', fill: '#fff' });
+    livesText = this.add.text(660, 0, livesString + this.player.health, { font: '30px Arial', fill: '#fff' });
     livesText.fixedToCamera = true;
     livesString.fixedToCamera = true;
 
@@ -151,9 +151,8 @@ Eddroid.Main.prototype = {
 
   update:function() {
 
-    var health = 10;
-
-    var counter = 0;
+    // var health = 10;
+    // var counter = 0;
 
     this.physics.arcade.collide(rubies, enemies, this.collisionHandler, null, this);
     this.physics.arcade.collide(rubies, rails, this.collisionHandler1, null, this);
@@ -397,19 +396,20 @@ Eddroid.Main.prototype = {
   playerHit: function (player, enemy) {
     enemy.kill();
 
-    this.score += 10;
+    // this.score += 10;
     scoreText.text = scoreString + this.score;
 
-    this.lives -= 1;
-    livesText.text = livesString + this.lives;
+    this.player.health -= 1;
+    livesText.text = livesString + this.player.health;
 
-    if (this.player.health > 1) {
-      this.player.health --;
+    if (this.player.health > 0) {
+      this.player.health;
     } else {
       this.player.kill();
       alert(scoreText._text);
       this.state.start('Menu');
     }
+
 
     var gone = flames.getFirstExists(false);
     gone.reset(this.player.body.x, this.player.body.y);
@@ -420,18 +420,19 @@ Eddroid.Main.prototype = {
   playerHit1: function (player, rail) {
     rail.kill();
 
-    this.score += 30;
+    // this.score += 30;
     scoreText.text = scoreString + this.score;
 
-    this.lives -= 1;
-    livesText.text = livesString + this.lives;
+    this.player.health -= 1;
+    livesText.text = livesString + this.player.health;
 
-    if (this.player.health > 1) {
-      this.player.health --;
+    if (this.player.health > 0) {
+      this.player.health;
     } else {
       this.player.kill();
       alert(scoreText._text);
       this.state.start('Menu');
+
     }
 
     var gone = flames.getFirstExists(false);
@@ -443,19 +444,22 @@ Eddroid.Main.prototype = {
   playerHit2: function (player, cascade) {
     cascade.kill();
 
-    if (this.player.health > 1) {
-      this.player.health --;
+    scoreText.text = scoreString + this.score;
+
+    this.player.health -= 1;
+    livesText.text = livesString + this.player.health;
+
+    if (this.player.health > 0) {
+      this.player.health;
     } else {
       this.player.kill();
       alert(scoreText._text);
       this.state.start('Menu');
+
     }
 
-    this.score += 15;
-    scoreText.text = scoreString + this.score;
+    // this.score += 15;
 
-    this.lives -= 1;
-    livesText.text = livesString + this.lives;
 
     var gone = flames.getFirstExists(false);
     gone.reset(this.player.body.x, this.player.body.y);
@@ -466,19 +470,22 @@ Eddroid.Main.prototype = {
   playerHit3: function (player, javascript) {
     javascript.kill();
 
-    if (this.player.health > 1) {
-      this.player.health --;
+    scoreText.text = scoreString + this.score;
+
+    this.player.health -= 1;
+    livesText.text = livesString + this.player.health;
+    
+    if (this.player.health > 0) {
+      this.player.health;
     } else {
       this.player.kill();
       alert(scoreText._text);
       this.state.start('Menu');
+
     }
 
-    this.score += 50;
-    scoreText.text = scoreString + this.score;
+    // this.score += 50;
 
-    this.lives -= 1;
-    livesText.text = livesString + this.lives;
 
     var gone = flames.getFirstExists(false);
     gone.reset(this.player.body.x, this.player.body.y);
