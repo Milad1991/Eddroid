@@ -17,11 +17,11 @@ canvas {
   display : block;
   margin : auto;
   padding-top: 5px;
-  float: none;
 }
 
 body {
   background: #000000;
+  /*background: url("bg.jpg");*/
 }
 
 nav {
@@ -29,7 +29,8 @@ nav {
 }
 
 #brand-logo img {
-  margin-left: 400px;
+  margin-left: -180px;
+  /*margin-left: 400px;*/
   height: 75px;
 }
 
