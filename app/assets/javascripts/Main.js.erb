@@ -135,13 +135,13 @@ Eddroid.Main.prototype = {
     this.javascriptDelay = 100;
 
     scoreString = 'Score: ';
-    scoreText = this.add.text(0, 0, scoreString + this.score, { font: '30px Arial', fill: '#fff' });
+    scoreText = this.add.text(10, 10, scoreString + this.score, { font: '30px Arial', fill: '#fff' });
     scoreText.fixedToCamera = true;
     scoreString.fixedToCamera = true;
     console.log(scoreText);
 
     livesString = 'Lives: ';
-    livesText = this.add.text(660, 0, livesString + this.player.health, { font: '30px Arial', fill: '#fff' });
+    livesText = this.add.text(660, 10, livesString + this.player.health, { font: '30px Arial', fill: '#fff' });
     livesText.fixedToCamera = true;
     livesString.fixedToCamera = true;
 
@@ -474,7 +474,7 @@ Eddroid.Main.prototype = {
 
     this.player.health -= 1;
     livesText.text = livesString + this.player.health;
-    
+
     if (this.player.health > 0) {
       this.player.health;
     } else {
