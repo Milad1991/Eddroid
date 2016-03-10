@@ -19,19 +19,27 @@ canvas {
   padding-top: 5px;
 }
 
+
+
 body {
   background: #000000;
-  /*background: url("bg.jpg");*/
+  background: url("bg.jpg");
 }
 
 nav {
   background: linear-gradient(black, gray);
 }
 
-#brand-logo img {
-  margin-left: -180px;
+nav img {
+  /*margin-left: -180px;*/
   /*margin-left: 400px;*/
+  margin: auto;
   height: 75px;
+  padding-left: 5px
+}
+
+a#github img {
+  padding-left: 1087px;
 }
 
 .instructions-left {
@@ -41,6 +49,7 @@ nav {
   color: white;
   float: left;
   text-align: center;
+  padding-right: 13.5px;
 }
 
 .instructions-right {
