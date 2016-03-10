@@ -13,5 +13,31 @@
  *= require_tree .
  *= require_self
  */
-canvas {   display : block;   margin : auto;    }
-body { background-color: #000000;}
+canvas {
+  display : block;
+  margin-left : 245px;
+  padding-top: 5px;
+  float: none;
+}
+
+body {
+  background-color: #000000;
+}
+
+nav {
+  background: linear-gradient(black, gray);
+}
+
+#brand-logo img {
+  margin-left: 400px;
+  height: 75px;
+}
+
+.instructions {
+  padding-top: 200px;
+  padding-left: 10px;
+  font-family: 'Permanent Marker', cursive;
+  color: white;
+  float: left;
+  text-align: center;
+}
