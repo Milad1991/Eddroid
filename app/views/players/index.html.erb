@@ -1,24 +1,31 @@
-<div class="instructions">
+<div class="instructions-left">
   <ul>
     <li>Walk Up: W || Up</li>
     <li>Walk Left: A || Left</li>
-    <li>Walk Right: D || Right</li>
     <li>Walk Down: S || Down</li>
-    <li>Fly Right: W & D || Up & Right </li>
-    <li>Fly Left: W & A || Up & Left</li>
+    <li>Walk Right: D || Right</li>
+  </ul>
+</div>
+<div class="instructions-right">
+  <ul>
+    <li>Fly Up & Right: W & D || Up & Right </li>
+    <li>Fly Up & Left: W & A || Up & Left</li>
+    <li>Fly Down & Right: S & D || Down & Right </li>
+    <li>Fly Up & Left: S & A || Down & Left</li>
     <li>Shoot: SPACEBAR</li>
   </ul>
+</div>
 <div id="canvas" >
-<script type="text/javascript">
+  <script type="text/javascript">
 
-var game = new Phaser.Game(800, 600, Phaser.AUTO, 'eddroid');
-game.state.add('Boot', Eddroid.Boot);
-game.state.add('Preload', Eddroid.Preload);
-game.state.add('Menu', Eddroid.Menu);
-game.state.add('Main', Eddroid.Main);
-game.state.start('Boot');
-// var audio = new Audio('public/assets/Nightcall.mp3');
-// audio.play();
+  var game = new Phaser.Game(800, 600, Phaser.AUTO, 'eddroid');
+  game.state.add('Boot', Eddroid.Boot);
+  game.state.add('Preload', Eddroid.Preload);
+  game.state.add('Menu', Eddroid.Menu);
+  game.state.add('Main', Eddroid.Main);
+  game.state.start('Boot');
+  // var audio = new Audio('public/assets/Nightcall.mp3');
+  // audio.play();
 
-</script>
+  </script>
 </div>
